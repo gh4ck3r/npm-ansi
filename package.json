@@ -1,6 +1,6 @@
 {
   "name": "ansi-string",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A module to support terminal ANSI",
   "main": "ansi-string.js",
   "repository": {
@@ -24,6 +24,5 @@
     "url": "https://github.com/gh4ck3r/npm-ansi/issues"
   },
   "homepage": "https://github.com/gh4ck3r/npm-ansi#readme",
-  "dependencies": {
-  }
+  "dependencies": {}
 }
