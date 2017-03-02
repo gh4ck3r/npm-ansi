@@ -2,6 +2,7 @@
   "name": "ansi-string",
   "version": "0.1.0",
   "description": "A module to support terminal ANSI",
+  "main": "ansi-string.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/gh4ck3r/npm-ansi.git"
