@@ -55,7 +55,10 @@ const props = {
 };
 
 for (let p in props) {
-  Object.defineProperty(exports, p, {get: ansiCodeAdder(props[p])});
+  Object.defineProperty(exports, p, {
+    get: ansiCodeAdder(props[p]),
+    enumerable: true,
+  });
 }
 
 const ansiBegin = '\x1b[';
