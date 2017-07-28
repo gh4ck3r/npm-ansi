@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /* global exports, process */
 
 // See more detail : https://en.wikipedia.org/wiki/ANSI_escape_code#CSI_codes
@@ -58,7 +58,7 @@ for (let p in props) {
   Object.defineProperty(exports, p, {get: ansiCodeAdder(props[p])});
 }
 
-const ansiBegin = "\x1b[";
+const ansiBegin = '\x1b[';
 const ansiEnd = 'm';
 const ansiReset = `${ansiBegin}${props.reset}${ansiEnd}`;
 
@@ -72,10 +72,10 @@ function ansiCodeAdder(aCode, aBuffer = []) {
 
       for (let p in props) {
         Object.defineProperty(boundTagAnsi, p,
-            {get: ansiCodeAdder(props[p], aBuffer)});
+          {get: ansiCodeAdder(props[p], aBuffer)});
       }
 
-      for (let p of ["stdout", "stderr"]) {
+      for (let p of ['stdout', 'stderr']) {
         boundTagAnsi[p] = flushAnsiCode(p);
       }
     }
@@ -104,8 +104,8 @@ function tagAnsi(strings, ...args) {
   } else { // Normal objects
     try {
       // Prevent unnecessary space while join below
-      str[0] += strings.toString() || "";
-    } catch (e) {}
+      str[0] += strings.toString() || '';
+    } catch (e) {/**/}
     args.forEach(a => str.push(a.toString()));
     if (str[0].startsWith(ansiBegin)) str.push(ansiReset);
     separator = ' ';
