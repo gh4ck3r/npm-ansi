@@ -8,7 +8,7 @@
     "url": "https://github.com/gh4ck3r/npm-ansi.git"
   },
   "scripts": {
-    "test": "node test.js"
+    "test": "mocha"
   },
   "keywords": [
     "terminal",
@@ -24,5 +24,8 @@
     "url": "https://github.com/gh4ck3r/npm-ansi/issues"
   },
   "homepage": "https://github.com/gh4ck3r/npm-ansi#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^3.4.2"
+  }
 }

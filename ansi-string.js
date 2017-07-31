@@ -67,7 +67,7 @@ const ansiReset = `${ansiBegin}${props.reset}${ansiEnd}`;
 
 function ansiCodeAdder(aCode, aBuffer = []) {
   let boundTagAnsi = null;
-  return function() {
+  const adderFunc = function() {
     aBuffer.push(aCode);
     //console.error("push : ", aCode);
     if (!boundTagAnsi) {
@@ -83,8 +83,13 @@ function ansiCodeAdder(aCode, aBuffer = []) {
       }
     }
 
+    boundTagAnsi.toString = function() {
+      return aBuffer.length ? ansiBegin + aBuffer.join(';') + ansiEnd : '';
+    };
     return boundTagAnsi;
   };
+
+  return adderFunc;
 
   function flushAnsiCode(aStream) {
     const stream = process[aStream];
@@ -110,7 +115,9 @@ function tagAnsi(strings, ...args) {
       str[0] += strings.toString() || '';
     } catch (e) {/**/}
     args.forEach(a => str.push(a.toString()));
-    if (str[0].startsWith(ansiBegin)) str.push(ansiReset);
+    if (str[0].startsWith(ansiBegin)) {
+      str.push(str.pop() + ansiReset);
+    }
     separator = ' ';
   }
 
