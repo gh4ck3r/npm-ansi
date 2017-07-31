@@ -8,7 +8,7 @@ npm install ansi-string
 ```
 
 # Usage
- All following examples assume that 'ansi-string' module is imported as below.
+ All following examples assume that 'ansi-string' module is imported as below. And, **all properties can be chained**.
 ```JavaScript
 const ansi = require('ansi-string');
 ````
