@@ -65,31 +65,29 @@ const ansiBegin = '\x1b[';
 const ansiEnd = 'm';
 const ansiReset = `${ansiBegin}${props.reset}${ansiEnd}`;
 
-function ansiCodeAdder(aCode, aBuffer = []) {
+function ansiCodeAdder(aCode, aBuffer = [aCode]) {
   let boundTagAnsi = null;
-  const adderFunc = function() {
-    aBuffer.push(aCode);
+  return function() {
+    if (aBuffer.slice(-1)[0] !== aCode) aBuffer.push(aCode);
     //console.error("push : ", aCode);
     if (!boundTagAnsi) {
       boundTagAnsi = tagAnsi.bind(aBuffer);
 
       for (let p in props) {
         Object.defineProperty(boundTagAnsi, p,
-          {get: ansiCodeAdder(props[p], aBuffer)});
+          {get: ansiCodeAdder(props[p], aBuffer), enumerable: true});
       }
 
       for (let p of ['stdout', 'stderr']) {
         boundTagAnsi[p] = flushAnsiCode(p);
       }
+      boundTagAnsi.toString = function() {
+        return aBuffer.length ? ansiBegin + aBuffer.join(';') + ansiEnd : '';
+      };
     }
 
-    boundTagAnsi.toString = function() {
-      return aBuffer.length ? ansiBegin + aBuffer.join(';') + ansiEnd : '';
-    };
     return boundTagAnsi;
   };
-
-  return adderFunc;
 
   function flushAnsiCode(aStream) {
     const stream = process[aStream];
@@ -99,11 +97,11 @@ function ansiCodeAdder(aCode, aBuffer = []) {
 }
 
 function tagAnsi(strings, ...args) {
-  const str = [`${ansiBegin}${this.join(';')}${ansiEnd}`]; // jshint ignore:line
-  this.length = 0; // jshint ignore:line
+  const str = [this.length ? `${ansiBegin}${this.join(';')}${ansiEnd}` : ''];
+  this.length = 1;
 
   let separator = '';
-  if (arguments.length === 0) { // For permanent apply to stdout
+  if (strings === undefined && args === undefined) { // For permanent apply to stdout
   } else if (Array.isArray(strings) && strings.length === args.length+1) {
     // for tagged template literal
     strings.forEach((elem, idx) => str.push(elem, args[idx]));

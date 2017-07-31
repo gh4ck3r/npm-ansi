@@ -33,7 +33,7 @@ describe('Tagged template string', function() {
 });
 
 describe('Block style', function() {
-  it.only('prints color text block', function() {
+  it('prints color text block', function() {
     const {begin, end, reset, yellow} = ansiCode;
     assert.strictEqual(ansi.yellow.toString(), begin + yellow + end);
     assert.strictEqual(ansi.reset.toString(), begin + reset + end);
@@ -54,5 +54,19 @@ describe('Block style', function() {
 
       console.log("Now it's normal text again");
     }
+  });
+});
+
+describe('Destructured properties', function() {
+  it('behave same as properties via root of module', function() {
+    const {red} = ansi;
+    const str = 'hello';
+
+    // It MUST be tested with twice call.
+    assert.strictEqual(ansi.red(str), red(str));
+    assert.strictEqual(ansi.red(str), red(str));
+
+    assert.strictEqual(ansi.red(str), red`${str}`);
+    assert.strictEqual(ansi.red(str), red`${str}`);
   });
 });
