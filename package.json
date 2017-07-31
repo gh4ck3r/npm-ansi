@@ -1,6 +1,6 @@
 {
   "name": "ansi-string",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A module to support terminal ANSI",
   "main": "ansi-string.js",
   "repository": {
